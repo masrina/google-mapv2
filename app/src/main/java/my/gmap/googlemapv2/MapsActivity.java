@@ -1,6 +1,9 @@
 package my.gmap.googlemapv2;
 
-import android.graphics.Interpolator;
+import android.annotation.TargetApi;
+import android.app.ActivityOptions;
+import android.content.Intent;
+import android.os.Build;
 import android.os.Handler;
 import android.os.SystemClock;
 import android.support.v4.app.FragmentActivity;
@@ -9,19 +12,17 @@ import android.util.Log;
 import android.view.View;
 import android.view.animation.BounceInterpolator;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
-
-import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -56,16 +57,16 @@ public class MapsActivity extends FragmentActivity {
 
         mMarkerHashMap = new HashMap<Marker, MyMarker>();
 
-        mMyMarkerArrayList.add(new MyMarker("Brasil", R.drawable.map_marker_green, Double.parseDouble("-28.5971788"), Double.parseDouble("-52.7309824")));
-        mMyMarkerArrayList.add(new MyMarker("United States", R.drawable.map_marker_green, Double.parseDouble("33.7266622"), Double.parseDouble("-87.1469829")));
-        mMyMarkerArrayList.add(new MyMarker("Canada", R.drawable.map_marker_green, Double.parseDouble("51.8917773"), Double.parseDouble("-86.0922954")));
-        mMyMarkerArrayList.add(new MyMarker("England", R.drawable.map_marker_green, Double.parseDouble("52.4435047"), Double.parseDouble("-3.4199249")));
-        mMyMarkerArrayList.add(new MyMarker("España", R.drawable.map_marker_green, Double.parseDouble("41.8728262"),
+        mMyMarkerArrayList.add(new MyMarker("Brasil", "MYR 350,000",R.drawable.map_marker_green, Double.parseDouble("-28.5971788"), Double.parseDouble("-52.7309824")));
+        mMyMarkerArrayList.add(new MyMarker("United States","MYR 1,000,000", R.drawable.map_marker_green, Double.parseDouble("33.7266622"), Double.parseDouble("-87.1469829")));
+        mMyMarkerArrayList.add(new MyMarker("Canada", "MYR 489,000", R.drawable.map_marker_green, Double.parseDouble("51.8917773"), Double.parseDouble("-86.0922954")));
+        mMyMarkerArrayList.add(new MyMarker("England", "MYR 524,000", R.drawable.map_marker_green, Double.parseDouble("52.4435047"), Double.parseDouble("-3.4199249")));
+        mMyMarkerArrayList.add(new MyMarker("España", "MYR 690,000", R.drawable.map_marker_green, Double.parseDouble("41.8728262"),
                 Double.parseDouble("-0.2375882")));
-        mMyMarkerArrayList.add(new MyMarker("Portugal", R.drawable.map_marker_green, Double.parseDouble("40.8316649"),
+        mMyMarkerArrayList.add(new MyMarker("Portugal", "MYR 847,000", R.drawable.map_marker_green, Double.parseDouble("40.8316649"),
                 Double.parseDouble("-4.936009")));
-        mMyMarkerArrayList.add(new MyMarker("Deutschland", R.drawable.map_marker_green, Double.parseDouble("51.1642292"), Double.parseDouble("10.4541194")));
-        mMyMarkerArrayList.add(new MyMarker("Atlantic Ocean", R.drawable.map_marker_green, Double.parseDouble("-13.1294607"), Double.parseDouble("-19.9602353")));
+        mMyMarkerArrayList.add(new MyMarker("Deutschland", "MYR 548,000", R.drawable.map_marker_green, Double.parseDouble("51.1642292"), Double.parseDouble("10.4541194")));
+        mMyMarkerArrayList.add(new MyMarker("Atlantic Ocean", "MYR 8,000,000", R.drawable.map_marker_green, Double.parseDouble("-13.1294607"), Double.parseDouble("-19.9602353")));
 
         setUpMapIfNeeded();
 
@@ -121,6 +122,17 @@ public class MapsActivity extends FragmentActivity {
             }else{
                 Toast.makeText(getApplicationContext(), "Unable to create Maps", Toast.LENGTH_SHORT).show();
             }
+
+            mMap.setOnInfoWindowClickListener(new GoogleMap.OnInfoWindowClickListener() {
+                @TargetApi(Build.VERSION_CODES.JELLY_BEAN) @Override public void onInfoWindowClick(Marker marker) {
+                    Intent listing_details = new Intent(MapsActivity.this, ListingDetailActivity.class);
+
+                    Bundle translateBundle = ActivityOptions.makeCustomAnimation(MapsActivity.this,
+                            R.anim.slide_in_left, R.anim.slide_out_left).toBundle();
+
+                    startActivity(listing_details, translateBundle);
+                }
+            });
         }
     }
 
@@ -138,7 +150,8 @@ public class MapsActivity extends FragmentActivity {
         if (markers.size() > 0){
             for (MyMarker myMarker : markers){
                 MarkerOptions markerOptions = new MarkerOptions().position(new LatLng(myMarker.getmLatitude(), myMarker.getmLongitude()));
-                markerOptions.icon(BitmapDescriptorFactory.fromResource(R.drawable.map_marker_green));
+                markerOptions.icon(
+                        BitmapDescriptorFactory.fromResource(R.drawable.map_marker_green));
 
                 Marker currentMarker = mMap.addMarker(markerOptions);
                 dropPinEffect(currentMarker);
@@ -158,10 +171,12 @@ public class MapsActivity extends FragmentActivity {
         @Override public View getInfoContents(Marker marker) {
             View view = getLayoutInflater().inflate(R.layout.infowindow_layout, null);
             MyMarker myMarker = mMarkerHashMap.get(marker);
-            ImageView markerIcon = (ImageView) view.findViewById(R.id.marker_icon);
-            TextView markerLabel = (TextView) view.findViewById(R.id.marker_label);
-            markerIcon.setImageResource(R.drawable.default_img);
+            ImageView markerIcon = (ImageView) view.findViewById(R.id.marker_icon1);
+            TextView markerLabel = (TextView) view.findViewById(R.id.property_title);
+            TextView price = (TextView) view.findViewById(R.id.property_price);
+            markerIcon.setImageResource(R.drawable.photourl);
             markerLabel.setText(myMarker.getmLabel());
+            price.setText(myMarker.getmPrice());
             return view;
         }
     }
@@ -186,6 +201,7 @@ public class MapsActivity extends FragmentActivity {
             }
         });
     }
+
 }
 
 

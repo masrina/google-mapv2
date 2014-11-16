@@ -4,28 +4,32 @@ package my.gmap.googlemapv2;
  * Created by admin on 11/15/14.
  */
 
-import com.google.android.gms.maps.model.LatLng;
-
 public class MyMarker {
-    private String mLabel;
+    private String mPropertyTitle;
+    private String mPropertyPrice;
     private Integer mIcon;
     private Double mLatitude;
     private Double mLongitude;
 
-    public MyMarker(String label, Integer icon, Double latitude, Double longitude){
-        this.mLabel = label;
+    public MyMarker(String label, String price, Integer icon, Double latitude, Double longitude){
+        this.mPropertyTitle = label;
+        this.mPropertyPrice = price;
         this.mIcon = icon;
         this.mLatitude = latitude;
         this.mLongitude = longitude;
     }
 
     public String getmLabel(){
-        return mLabel;
+        return mPropertyTitle;
     }
 
     public void setmLabel(String mLabel){
-        this.mLabel = mLabel;
+        this.mPropertyTitle = mLabel;
     }
+
+    public String getmPrice(){return mPropertyPrice;}
+
+    public void setmPropertyPrice(String mPropertyPrice) {this.mPropertyPrice = mPropertyPrice;}
 
     public Integer getmIcon(){
         return mIcon;
