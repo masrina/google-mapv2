@@ -1,7 +1,9 @@
-package my.gmap.googlemapv2;
+package my.gmap.googlemapv2.activity;
 
 import android.app.Activity;
 import android.os.Bundle;
+
+import my.gmap.googlemapv2.R;
 
 /**
  * Created by admin on 11/16/14.

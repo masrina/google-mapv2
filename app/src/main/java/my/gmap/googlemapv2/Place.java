@@ -1,9 +1,8 @@
 package my.gmap.googlemapv2;
 
-import java.io.Serializable;
 import com.google.api.client.util.Key;
 
-import android.location.Location;
+import java.io.Serializable;
 
 /**
  * Created by admin on 11/15/14.

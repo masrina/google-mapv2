@@ -1,5 +1,7 @@
 apply plugin: 'com.android.application'
 repositories {
+    mavenCentral()
+    mavenLocal()
     maven { url 'http://download.crashlytics.com/maven' }
     jcenter()
 }
@@ -9,7 +11,7 @@ android {
 
     defaultConfig {
         applicationId "my.gmap.googlemapv2"
-        minSdkVersion 10
+        minSdkVersion 11
         targetSdkVersion 21
         versionCode 1
         versionName "1.0"
@@ -29,7 +31,10 @@ dependencies {
     compile 'com.google.oauth-client:google-oauth-client:1.19.0'
     compile 'com.google.api-client:google-api-client:1.19.0'
     compile 'com.google.http-client:google-http-client:1.19.0'
-    compile 'com.squareup.retrofit:retrofit:1.6.1'
-    compile 'com.squareup.okhttp:okhttp:1.6.0'
-    compile 'com.squareup.okhttp:okhttp-urlconnection:1.6.0'
+    compile 'com.squareup.retrofit:retrofit:+'
+    compile 'com.squareup.okhttp:okhttp:+'
+    compile 'com.squareup.okhttp:okhttp-urlconnection:+'
+    compile 'cn.pedant.sweetalert:library:1.1'
+    compile 'com.facebook.rebound:rebound:0.3.6'
+    compile 'com.github.markushi:circlebutton:1.1'
 }

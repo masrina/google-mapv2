@@ -4,4 +4,9 @@
     <string name="app_name">GoogleMapV2</string>
     <string name="title_activity_maps">Map</string>
 
+    <string-array name="property_type">
+        <item>Condominium</item>
+        <item>Apartment</item>
+        <item>Office</item>
+    </string-array>
 </resources>

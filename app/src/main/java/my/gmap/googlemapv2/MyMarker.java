@@ -7,11 +7,11 @@ package my.gmap.googlemapv2;
 public class MyMarker {
     private String mPropertyTitle;
     private String mPropertyPrice;
-    private Integer mIcon;
+    private String mIcon;
     private Double mLatitude;
     private Double mLongitude;
 
-    public MyMarker(String label, String price, Integer icon, Double latitude, Double longitude){
+    public MyMarker(String label, String price, String icon, Double latitude, Double longitude){
         this.mPropertyTitle = label;
         this.mPropertyPrice = price;
         this.mIcon = icon;
@@ -20,6 +20,9 @@ public class MyMarker {
     }
 
     public String getmLabel(){
+        if (null == mPropertyTitle) {
+            mPropertyTitle = "You're Here";
+        }
         return mPropertyTitle;
     }
 
@@ -27,15 +30,20 @@ public class MyMarker {
         this.mPropertyTitle = mLabel;
     }
 
-    public String getmPrice(){return mPropertyPrice;}
+    public String getmPrice(){
+        if (null == mPropertyPrice){
+            mPropertyPrice = "";
+        }
+        return mPropertyPrice;
+    }
 
     public void setmPropertyPrice(String mPropertyPrice) {this.mPropertyPrice = mPropertyPrice;}
 
-    public Integer getmIcon(){
+    public String getmIcon(){
         return mIcon;
     }
 
-    public void setmIcon(Integer mIcon){
+    public void setmIcon(String mIcon){
         this.mIcon = mIcon;
     }
 
